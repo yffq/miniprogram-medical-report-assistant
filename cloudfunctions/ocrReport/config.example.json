@@ -1,0 +1,13 @@
+{
+  "description": "云函数配置文件模板",
+  "permissions": {
+    "openapi": [
+      "wxacode.get"
+    ]
+  },
+  "envVariables": {
+    "TEXTIN_APP_ID": "your_textin_app_id_here",
+    "TEXTIN_SECRET_CODE": "your_textin_secret_code_here",
+    "DEBUG_OCR": "false"
+  }
+}

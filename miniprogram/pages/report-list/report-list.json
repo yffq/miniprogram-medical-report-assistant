@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "report-card": "/components/report-card/report-card",
+    "loading": "/components/loading/loading"
+  },
+  "enablePullDownRefresh": true
+}

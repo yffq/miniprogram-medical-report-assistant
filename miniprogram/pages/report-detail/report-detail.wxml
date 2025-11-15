@@ -1,0 +1,106 @@
+<!--report-detail.wxml-->
+<navigation-bar title="报告详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 加载中 -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <loading></loading>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 报告内容 -->
+    <view wx:else>
+      <!-- 报告信息 -->
+      <view class="report-header">
+        <view class="header-row">
+          <text class="header-label">报告日期</text>
+          <text class="header-value">{{report.reportDate}}</text>
+        </view>
+        <view class="header-row">
+          <text class="header-label">检验项目</text>
+          <text class="header-value">{{report.items.length}} 项</text>
+        </view>
+        <view class="header-row">
+          <text class="header-label">异常项目</text>
+          <text class="header-value abnormal">{{abnormalItems.length}} 项</text>
+        </view>
+      </view>
+
+      <!-- 筛选按钮 -->
+      <view class="filter-section">
+        <view 
+          class="filter-button {{showAbnormalOnly ? '' : 'active'}}"
+          bindtap="toggleShowMode"
+        >
+          全部 ({{report.items.length}})
+        </view>
+        <view 
+          class="filter-button {{showAbnormalOnly ? 'active' : ''}}"
+          bindtap="toggleShowMode"
+        >
+          仅异常 ({{abnormalItems.length}})
+        </view>
+      </view>
+
+      <!-- 异常项目 -->
+      <view wx:if="{{abnormalItems.length > 0 && (showAbnormalOnly || !showAbnormalOnly)}}" class="items-section">
+        <view class="section-title abnormal">⚠️ 异常指标</view>
+        <view class="items-list">
+          <view 
+            wx:for="{{abnormalItems}}" 
+            wx:key="id"
+            class="item-card abnormal"
+          >
+            <view class="item-header">
+              <text class="item-name">{{item.name}}</text>
+              <text class="item-badge abnormal">异常</text>
+            </view>
+            <view class="item-body">
+              <view class="item-value-row">
+                <text class="item-label">检测值：</text>
+                <text class="item-value abnormal">{{item.value}} {{item.unit}}</text>
+              </view>
+              <view class="item-range-row">
+                <text class="item-label">正常范围：</text>
+                <text class="item-range">{{item.normalRange}} {{item.unit}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 正常项目 -->
+      <view wx:if="{{normalItems.length > 0 && !showAbnormalOnly}}" class="items-section">
+        <view class="section-title">✓ 正常指标</view>
+        <view class="items-list">
+          <view 
+            wx:for="{{normalItems}}" 
+            wx:key="id"
+            class="item-card"
+          >
+            <view class="item-header">
+              <text class="item-name">{{item.name}}</text>
+              <text class="item-badge normal">正常</text>
+            </view>
+            <view class="item-body">
+              <view class="item-value-row">
+                <text class="item-label">检测值：</text>
+                <text class="item-value">{{item.value}} {{item.unit}}</text>
+              </view>
+              <view class="item-range-row">
+                <text class="item-label">正常范围：</text>
+                <text class="item-range">{{item.normalRange}} {{item.unit}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空状态 -->
+      <view wx:if="{{showAbnormalOnly && abnormalItems.length === 0}}" class="empty-state">
+        <text class="empty-icon">🎉</text>
+        <text class="empty-text">太棒了！所有指标都正常</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

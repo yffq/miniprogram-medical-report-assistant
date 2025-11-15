@@ -1,0 +1,76 @@
+<!--upload.wxml-->
+<navigation-bar title="上传报告" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 日期选择 -->
+    <view class="date-section">
+      <view class="section-title">报告日期</view>
+      <picker mode="date" value="{{reportDate}}" bindchange="onDateChange">
+        <view class="date-picker">
+          <text>{{reportDate}}</text>
+          <text class="picker-arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 上传区域 -->
+    <view class="upload-section">
+      <!-- 空闲状态 -->
+      <view wx:if="{{ocrStatus === 'idle'}}" class="upload-area" bindtap="chooseImage">
+        <view class="upload-icon">📷</view>
+        <view class="upload-text">点击拍照或选择图片</view>
+        <view class="upload-hint">支持 JPG、PNG 格式，建议小于 5MB</view>
+      </view>
+
+      <!-- 上传中 -->
+      <view wx:elif="{{ocrStatus === 'uploading'}}" class="status-area">
+        <loading></loading>
+        <view class="status-text">正在上传图片...</view>
+      </view>
+
+      <!-- 识别中 -->
+      <view wx:elif="{{ocrStatus === 'recognizing'}}" class="status-area">
+        <image class="preview-image" src="{{imageUrl}}" mode="aspectFit"></image>
+        <loading></loading>
+        <view class="status-text">正在识别报告内容...</view>
+        <view class="status-hint">这可能需要几秒钟</view>
+      </view>
+
+      <!-- 识别成功 -->
+      <view wx:elif="{{ocrStatus === 'success'}}" class="status-area">
+        <image class="preview-image" src="{{imageUrl}}" mode="aspectFit"></image>
+        <view class="success-icon">✓</view>
+        <view class="status-text success">识别成功！</view>
+        <view class="status-hint">正在跳转到编辑页面...</view>
+      </view>
+
+      <!-- 识别失败 -->
+      <view wx:elif="{{ocrStatus === 'error'}}" class="status-area">
+        <image wx:if="{{imageUrl}}" class="preview-image" src="{{imageUrl}}" mode="aspectFit"></image>
+        <view class="error-icon">✕</view>
+        <view class="status-text error">{{errorMessage}}</view>
+        <view class="button-group">
+          <button class="retry-button" bindtap="retry">重新上传</button>
+          <button class="back-button" bindtap="goBack">返回</button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 使用提示 -->
+    <view class="tips-section">
+      <view class="section-title">拍照提示</view>
+      <view class="tip-item">
+        <text class="tip-icon">💡</text>
+        <text class="tip-text">确保报告内容清晰可见</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-icon">💡</text>
+        <text class="tip-text">避免反光和阴影</text>
+      </view>
+      <view class="tip-item">
+        <text class="tip-icon">💡</text>
+        <text class="tip-text">尽量保持报告平整</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

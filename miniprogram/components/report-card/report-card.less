@@ -1,0 +1,46 @@
+.report-card {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+
+  .report-date {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 24rpx;
+  }
+
+  .report-stats {
+    display: flex;
+    gap: 48rpx;
+    margin-bottom: 16rpx;
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8rpx;
+
+      .stat-label {
+        font-size: 24rpx;
+        color: #999;
+      }
+
+      .stat-value {
+        font-size: 28rpx;
+        font-weight: 600;
+        color: #333;
+
+        &.abnormal {
+          color: #ff4d4f;
+        }
+      }
+    }
+  }
+
+  .report-time {
+    font-size: 24rpx;
+    color: #999;
+  }
+}

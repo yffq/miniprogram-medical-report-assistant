@@ -1,0 +1,100 @@
+<!--chart.wxml-->
+<navigation-bar title="指标趋势" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 加载中 -->
+    <view wx:if="{{loading}}" class="loading-state">
+      <loading></loading>
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <!-- 图表内容 -->
+    <view wx:else>
+      <!-- 图表说明 -->
+      <view class="chart-info">
+        <text class="info-title">📈 趋势图表</text>
+        <text class="info-desc">显示 {{indicatorData.length}} 个指标的变化趋势</text>
+      </view>
+
+      <!-- ECharts 图表区域 -->
+      <view class="chart-container">
+        <ec-canvas id="mychart" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="action-buttons">
+        <button class="action-button" bindtap="toggleStatistics">
+          {{showStatistics ? '隐藏' : '显示'}}统计信息
+        </button>
+      </view>
+
+      <!-- 统计信息 -->
+      <view wx:if="{{showStatistics}}" class="statistics-section">
+        <view class="section-title">📊 数据统计</view>
+        <view class="statistics-list">
+          <view wx:for="{{statistics}}" wx:key="name" class="stat-card">
+            <view class="stat-header">
+              <text class="stat-name">{{item.name}}</text>
+              <text class="stat-unit">{{item.unit}}</text>
+            </view>
+            <view class="stat-body">
+              <view class="stat-item">
+                <text class="stat-label">最小值</text>
+                <text class="stat-value">{{item.min}}</text>
+              </view>
+              <view class="stat-item">
+                <text class="stat-label">最大值</text>
+                <text class="stat-value">{{item.max}}</text>
+              </view>
+              <view class="stat-item">
+                <text class="stat-label">平均值</text>
+                <text class="stat-value">{{item.avg}}</text>
+              </view>
+              <view class="stat-item">
+                <text class="stat-label">记录数</text>
+                <text class="stat-value">{{item.count}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 数据列表 -->
+      <view class="data-section">
+        <view class="section-title">📋 历史数据</view>
+        <view wx:for="{{indicatorData}}" wx:key="indicator" class="indicator-group">
+          <view class="group-header">
+            <text class="group-name">{{item.indicator}}</text>
+            <text class="group-count">{{item.records.length}} 条记录</text>
+          </view>
+          <view class="records-list">
+            <view 
+              wx:for="{{item.records}}" 
+              wx:for-item="record"
+              wx:for-index="recordIndex"
+              wx:key="recordIndex"
+              class="record-item {{record.status === 'N' ? '' : 'abnormal'}}"
+              data-report-id="{{record.reportId}}"
+              bindtap="viewReport"
+            >
+              <view class="record-date">{{record.date}}</view>
+              <view class="record-value">
+                <text class="value-number">{{record.value}}</text>
+                <text class="value-unit">{{record.unit}}</text>
+              </view>
+              <view class="record-range">
+                <text class="range-label">正常范围：</text>
+                <text class="range-value">{{record.normalRange || '无'}}</text>
+              </view>
+              <view class="record-status">
+                <text class="status-badge {{record.status === 'N' ? 'normal' : 'abnormal'}}">
+                  {{record.status === 'L' ? '偏低' : record.status === 'H' ? '偏高' : '正常'}}
+                </text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

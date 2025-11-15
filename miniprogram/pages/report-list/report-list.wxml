@@ -1,0 +1,39 @@
+<!--report-list.wxml-->
+<navigation-bar title="历史报告" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view 
+  class="scrollarea" 
+  scroll-y 
+  type="list"
+  bindscrolltolower="onReachBottom"
+  enable-back-to-top
+>
+  <view class="container">
+    <!-- 空状态 -->
+    <view wx:if="{{isEmpty && !loading}}" class="empty-state">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">还没有报告记录</text>
+      <text class="empty-hint">点击下方按钮上传您的第一份报告</text>
+      <button class="upload-button" bindtap="goHome">去上传</button>
+    </view>
+
+    <!-- 报告列表 -->
+    <view wx:else class="report-list">
+      <report-card
+        wx:for="{{reports}}"
+        wx:key="_id"
+        report="{{item}}"
+      ></report-card>
+
+      <!-- 加载更多 -->
+      <view wx:if="{{loading}}" class="loading-more">
+        <loading></loading>
+        <text class="loading-text">加载中...</text>
+      </view>
+
+      <!-- 没有更多 -->
+      <view wx:elif="{{!hasMore && reports.length > 0}}" class="no-more">
+        <text class="no-more-text">没有更多了</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

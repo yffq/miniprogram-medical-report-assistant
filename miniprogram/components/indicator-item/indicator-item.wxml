@@ -1,0 +1,27 @@
+<view class="indicator-item {{item.status === 'N' ? 'normal' : 'abnormal'}}">
+  <view class="item-header">
+    <text class="item-name">{{item.name}}</text>
+  </view>
+  
+  <view class="item-content">
+    <view class="item-row">
+      <text class="label">数值:</text>
+      <text class="value {{item.status === 'N' ? '' : 'abnormal'}}">{{item.value}} {{item.unit}}</text>
+    </view>
+    <view class="item-row">
+      <text class="label">正常范围:</text>
+      <text class="value">{{item.normalRange || '无'}}</text>
+    </view>
+    <view class="item-row">
+      <text class="label">状态:</text>
+      <text class="value status-{{item.status}}">
+        {{item.status === 'L' ? '偏低' : item.status === 'H' ? '偏高' : '正常'}}
+      </text>
+    </view>
+  </view>
+  
+  <view class="item-actions" wx:if="{{editable}}">
+    <button class="action-btn edit" bindtap="onEdit">编辑</button>
+    <button class="action-btn delete" bindtap="onDelete">删除</button>
+  </view>
+</view>

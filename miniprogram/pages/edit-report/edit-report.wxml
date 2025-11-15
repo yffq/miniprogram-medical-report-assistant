@@ -1,0 +1,108 @@
+<!--edit-report.wxml-->
+<navigation-bar title="编辑报告" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 报告信息 -->
+    <view class="report-info">
+      <view class="info-row">
+        <text class="info-label">报告日期：</text>
+        <text class="info-value">{{reportDate}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">检验项目：</text>
+        <text class="info-value">{{items.length}} 项</text>
+      </view>
+    </view>
+
+    <!-- 检验项目列表 -->
+    <view class="items-list">
+      <view class="list-header">
+        <text class="header-title">检验项目</text>
+        <text class="header-hint">点击可编辑或删除</text>
+      </view>
+
+      <view wx:if="{{items.length === 0}}" class="empty-state">
+        <text class="empty-icon">📋</text>
+        <text class="empty-text">暂无检验项目</text>
+      </view>
+
+      <indicator-item
+        wx:for="{{items}}"
+        wx:key="index"
+        item="{{item}}"
+        editable="{{true}}"
+        data-index="{{index}}"
+        bind:edit="editItem"
+        bind:delete="deleteItem"
+      ></indicator-item>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="cancel-button" bindtap="cancel">取消</button>
+      <button class="save-button" bindtap="saveReportData">保存报告</button>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 编辑对话框 -->
+<view wx:if="{{showEditDialog}}" class="dialog-mask" bindtap="closeEditDialog">
+  <view class="dialog-content" catchtap="{{null}}">
+    <view class="dialog-header">
+      <text class="dialog-title">编辑检验项目</text>
+      <text class="dialog-close" bindtap="closeEditDialog">✕</text>
+    </view>
+
+    <view class="dialog-body">
+      <view class="form-item">
+        <text class="form-label">项目名称</text>
+        <input
+          class="form-input"
+          value="{{editingItem.name}}"
+          data-field="name"
+          bindinput="onInputChange"
+          placeholder="请输入项目名称"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">数值</text>
+        <input
+          class="form-input"
+          type="digit"
+          value="{{editingItem.value}}"
+          data-field="value"
+          bindinput="onInputChange"
+          placeholder="请输入数值"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">单位</text>
+        <input
+          class="form-input"
+          value="{{editingItem.unit}}"
+          data-field="unit"
+          bindinput="onInputChange"
+          placeholder="请输入单位"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">正常范围</text>
+        <input
+          class="form-input"
+          value="{{editingItem.normalRange}}"
+          data-field="normalRange"
+          bindinput="onInputChange"
+          placeholder="例如：3.5-5.5"
+        />
+      </view>
+    </view>
+
+    <view class="dialog-footer">
+      <button class="dialog-button cancel" bindtap="closeEditDialog">取消</button>
+      <button class="dialog-button confirm" bindtap="saveEdit">保存</button>
+    </view>
+  </view>
+</view>

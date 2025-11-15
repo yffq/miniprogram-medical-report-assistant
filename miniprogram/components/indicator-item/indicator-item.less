@@ -1,0 +1,123 @@
+.indicator-item {
+  background: #fff;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-bottom: 12rpx;
+  position: relative;
+  box-sizing: border-box;
+  border: 1rpx solid #f0f0f0;
+
+  &.abnormal {
+    border-left: 4rpx solid #ff4d4f;
+  }
+
+  &.normal {
+    border-left: 4rpx solid #52c41a;
+  }
+
+  .item-header {
+    margin-bottom: 12rpx;
+
+    .item-name {
+      font-size: 28rpx;
+      font-weight: 600;
+      color: #333;
+      line-height: 1.4;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+  }
+
+  .item-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12rpx;
+    margin-top: 24rpx; // 增加上边距，在状态行下面留出空白
+    padding-top: 0;
+    border-top: none;
+    justify-content: center; // 按钮区域居中
+
+    .action-btn {
+      flex: 0 0 auto; // 不自动伸缩，使用固定宽度
+      width: 140rpx; // 固定宽度，让按钮更短
+      padding: 0;
+      font-size: 26rpx;
+      font-weight: 500;
+      line-height: 48rpx;
+      border-radius: 8rpx;
+      border: 1rpx solid #d9d9d9;
+      background: #fff;
+      color: #666;
+      white-space: nowrap;
+      height: 48rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      text-align: center;
+
+      &.edit {
+        color: #1890ff;
+        border-color: #1890ff;
+        background: #f0f8ff;
+      }
+
+      &.delete {
+        color: #ff4d4f;
+        border-color: #ff4d4f;
+        background: #fff5f5;
+      }
+
+      &::after {
+        border: none;
+      }
+    }
+  }
+
+  .item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8rpx;
+
+    .item-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 26rpx;
+      min-height: 48rpx;
+
+      .label {
+        color: #999;
+        margin-right: 8rpx;
+        width: 120rpx;
+        flex-shrink: 0;
+        display: inline-block;
+      }
+
+      .value {
+        color: #333;
+        flex: 1;
+        font-weight: 500;
+        word-break: break-all;
+        display: inline-block;
+
+        &.abnormal {
+          color: #ff4d4f;
+          font-weight: 600;
+        }
+
+        &.status-L {
+          color: #1890ff;
+        }
+
+        &.status-H {
+          color: #ff4d4f;
+        }
+
+        &.status-N {
+          color: #52c41a;
+        }
+      }
+    }
+  }
+}

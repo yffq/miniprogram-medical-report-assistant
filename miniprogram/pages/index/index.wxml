@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<navigation-bar title="检验报告助手" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <view class="header">
+      <view class="app-title">检验报告助手</view>
+      <view class="app-desc">智能管理您的医学检验报告</view>
+    </view>
+
+    <view class="menu-list">
+      <view 
+        class="menu-item" 
+        wx:for="{{menuItems}}" 
+        wx:key="id"
+        data-url="{{item.url}}"
+        bindtap="navigateTo"
+      >
+        <view class="menu-icon">{{item.icon}}</view>
+        <view class="menu-content">
+          <view class="menu-title">{{item.title}}</view>
+          <view class="menu-desc">{{item.desc}}</view>
+        </view>
+        <view class="menu-arrow">›</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

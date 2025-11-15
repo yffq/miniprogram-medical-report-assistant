@@ -1,0 +1,14 @@
+<view class="report-card" bindtap="onTap">
+  <view class="report-date">{{report.reportDate}}</view>
+  <view class="report-stats">
+    <view class="stat-item">
+      <text class="stat-label">检验项</text>
+      <text class="stat-value">{{report.itemCount}}</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-label">异常项</text>
+      <text class="stat-value abnormal">{{report.abnormalCount}}</text>
+    </view>
+  </view>
+  <view class="report-time">{{report.createdAt}}</view>
+</view>
