@@ -19,26 +19,14 @@ const {
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 /**
- * 读取配置文件
- */
-let config = {};
-try {
-  config = require('./config.json');
-} catch (error) {
-  console.log('未找到 config.json 文件，将使用默认配置');
-}
-
-// 提取环境变量
-const env = config.envVariables || {};
-
-/**
  * Textin OCR API 配置
+ * 从环境变量中读取（在云函数配置中设置）
  */
 const TEXTIN_OCR_CONFIG = {
   // 医疗识别 API URL
   apiUrl: 'https://api.textin.com/ai/service/v1/medical_recognize',
-  appId: env.TEXTIN_APP_ID || '',
-  secretCode: env.TEXTIN_SECRET_CODE || '',
+  appId: process.env.TEXTIN_APP_ID || '',
+  secretCode: process.env.TEXTIN_SECRET_CODE || '',
   timeout: 30000  // 30秒超时
 };
 
@@ -116,7 +104,7 @@ async function callTextinOCR(imageBase64) {
     });
 
     // 打印完整返回数据（仅在需要调试时启用）
-    const DEBUG_MODE = env.DEBUG_OCR === 'true';
+    const DEBUG_MODE = process.env.DEBUG_OCR === 'true';
     
     if (DEBUG_MODE) {
       // 完整打印原始返回数据（分段打印，避免日志截断）
@@ -510,10 +498,10 @@ exports.main = async (event, context) => {
     }
 
     // 5. 返回结果
-    return {
+    return ErrorHandler.createSuccessResponse({
       items,
       totalItems: items.length
-    };
+    });
 
   });
 };

@@ -282,7 +282,8 @@ export async function checkImageSize(
  */
 export async function getFileSize(filePath: string): Promise<number> {
   return new Promise((resolve, reject) => {
-    wx.getFileInfo({
+    const fs = wx.getFileSystemManager()
+    fs.getFileInfo({
       filePath,
       success: (res) => {
         resolve(res.size)
